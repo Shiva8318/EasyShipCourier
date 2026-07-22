@@ -34,6 +34,11 @@ public class ParcelService {
         return repository.findAll();
 
     }
+    public List<Parcel> getParcelsByUserEmail(String email){
+
+        return repository.findByUserEmail(email);
+
+    }
     public Parcel getParcelById(Integer id){
 
         return repository.findById(id).orElse(null);
