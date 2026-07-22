@@ -1,6 +1,4 @@
 services:
   - type: web
     name: easyshipcourier
-    runtime: java
-    buildCommand: ./mvnw clean package
-    startCommand: java -jar target/*.jar
+    runtime: docker
