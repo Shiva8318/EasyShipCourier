@@ -15,5 +15,6 @@ public interface ParcelRepository extends JpaRepository<Parcel,Integer>{
     long countByStatus(String status);
 
     List<Parcel> findTop10ByOrderByIdDesc();
+    List<Parcel> findByUserEmail(String userEmail);
 
 }
