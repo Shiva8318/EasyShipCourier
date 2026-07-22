@@ -29,6 +29,7 @@ public class Parcel {
     private String status;
 
     private String trackingId;
+    private String userEmail;
 
     public Parcel() {
     }
@@ -115,6 +116,13 @@ public class Parcel {
 
     public String getTrackingId() {
         return trackingId;
+    }
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public void setTrackingId(String trackingId) {
