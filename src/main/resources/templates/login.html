@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login | EasyShip Courier</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+
+min-height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+background:url("/images/truck.png") center center/cover no-repeat;
+
+}
+
+.overlay{
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.60);
+
+}
+
+.login-card{
+
+position:relative;
+
+z-index:2;
+
+width:450px;
+
+background:rgba(255,255,255,.15);
+
+backdrop-filter:blur(15px);
+
+padding:40px;
+
+border-radius:20px;
+
+box-shadow:0 20px 50px rgba(0,0,0,.35);
+
+color:#fff;
+
+}
+
+.logo{
+
+width:90px;
+
+display:block;
+
+margin:auto;
+
+margin-bottom:20px;
+
+}
+
+h2{
+
+text-align:center;
+
+margin-bottom:25px;
+
+font-weight:700;
+
+}
+
+.form-control{
+
+height:50px;
+
+border-radius:10px;
+
+border:none;
+
+}
+
+.form-control:focus{
+
+box-shadow:0 0 10px rgba(227,24,55,.5);
+
+}
+
+.btn-danger{
+
+height:50px;
+
+border-radius:10px;
+
+font-weight:600;
+
+background:#e31837;
+
+border:none;
+
+}
+
+.btn-danger:hover{
+
+background:#bf1530;
+
+}
+
+.bottom-links{
+
+display:flex;
+
+justify-content:space-between;
+
+margin-top:20px;
+
+}
+
+.bottom-links a{
+
+color:#fff;
+
+text-decoration:none;
+
+}
+
+.bottom-links a:hover{
+
+color:#ffc7c7;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<div class="login-card">
+
+<img th:src="@{/images/logo.png}" class="logo" alt="Logo">
+
+<h2>Login</h2>
+
+<form th:action="@{/login}" method="post">
+
+<div class="mb-3">
+
+<label>Email</label>
+
+<input
+type="email"
+name="email"
+class="form-control"
+placeholder="Enter Email"
+required>
+
+</div>
+
+<div class="mb-3">
+
+<label>Password</label>
+
+<input
+type="password"
+name="password"
+class="form-control"
+placeholder="Enter Password"
+required>
+
+</div>
+
+<button
+type="submit"
+class="btn btn-danger w-100">
+
+<i class="bi bi-box-arrow-in-right"></i>
+
+Login
+
+</button>
+
+</form>
+
+<div class="bottom-links">
+
+<a th:href="@{/signup}">
+
+Create Account
+
+</a>
+
+<a th:href="@{/}">
+
+Home
+
+</a>
+
+</div>
+<hr class="border-light my-4">
+
+<div class="text-center">
+
+    <p class="mb-2 text-light">
+
+        Administrator Access
+
+    </p>
+
+    <a th:href="@{/admin}"
+       class="btn btn-outline-light w-100">
+
+        <i class="bi bi-shield-lock-fill"></i>
+
+        Login as Admin
+
+    </a>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

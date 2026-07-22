@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Parcel Booked | EasyShip Courier</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+
+background:#f4f7fb;
+
+overflow-x:hidden;
+
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+
+background:#111827;
+
+padding:15px 0;
+
+box-shadow:0 5px 20px rgba(0,0,0,.08);
+
+}
+
+.navbar-brand{
+
+font-size:28px;
+
+font-weight:700;
+
+color:#fff!important;
+
+}
+
+.navbar .btn{
+
+border-radius:30px;
+
+padding:10px 24px;
+
+font-weight:600;
+
+}
+
+/* ================= HERO ================= */
+
+.hero{
+
+background:linear-gradient(135deg,#f6fff7,#eef8ff);
+
+padding:60px 20px;
+
+text-align:center;
+
+}
+
+.hero h1{
+
+font-size:42px;
+
+font-weight:700;
+
+color:#198754;
+
+margin-top:15px;
+
+}
+
+.hero p{
+
+font-size:18px;
+
+color:#666;
+
+margin-top:10px;
+
+}
+
+/* ================= MAIN CARD ================= */
+
+.main-card{
+
+background:#fff;
+
+border-radius:25px;
+
+padding:35px;
+
+box-shadow:0 20px 50px rgba(0,0,0,.08);
+
+}
+
+/* ================= TRACKING CARD ================= */
+
+.tracking-card{
+
+background:#fff7f7;
+
+border:2px dashed #dc3545;
+
+border-radius:20px;
+
+padding:25px;
+
+}
+
+/* ================= LOCATION IMAGE ================= */
+
+.location-img{
+
+width:100%;
+
+max-width:300px;
+
+animation:floatImage 4s ease-in-out infinite;
+
+}
+
+@keyframes floatImage{
+
+0%{
+
+transform:translateY(0);
+
+}
+
+50%{
+
+transform:translateY(-12px);
+
+}
+
+100%{
+
+transform:translateY(0);
+
+}
+
+}
+
+/* ================= BUTTON ================= */
+
+.btn-main{
+
+border-radius:30px;
+
+padding:12px 30px;
+
+font-weight:600;
+
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+
+background:#111827;
+
+color:#fff;
+
+padding:30px;
+
+margin-top:70px;
+
+text-align:center;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg">
+
+<div class="container">
+
+<a class="navbar-brand"
+th:href="@{/dashboard}">
+
+EasyShip Courier
+
+</a>
+
+<div>
+
+<a
+th:href="@{/dashboard}"
+class="btn btn-light me-2">
+
+Dashboard
+
+</a>
+
+<a
+th:href="@{/logout}"
+class="btn btn-danger">
+
+Logout
+
+</a>
+
+</div>
+
+</div>
+
+</nav>
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+<div class="container">
+
+<lottie-player
+src="https://assets10.lottiefiles.com/packages/lf20_jbrw3hcz.json"
+background="transparent"
+speed="1"
+style="width:180px;height:180px;margin:auto;"
+autoplay>
+</lottie-player>
+
+<h1>Parcel Booked Successfully!</h1>
+
+<p>
+
+Your parcel has been booked successfully.
+Keep your Tracking ID safe for future tracking.
+
+</p>
+
+</div>
+
+</section>
+
+<!-- ================= MAIN SECTION ================= -->
+
+<div class="container my-5">
+
+<div class="row g-5 align-items-center">
+
+<!-- ================= LEFT SIDE ================= -->
+
+<div class="col-lg-5">
+
+<div class="tracking-card">
+
+<h5 class="fw-bold mb-3">
+
+<i class="bi bi-upc-scan"></i>
+
+Tracking ID
+
+</h5>
+
+<h2
+id="trackingId"
+class="text-danger fw-bold"
+th:text="${trackingId}">
+
+ES12345678
+
+</h2>
+
+<button
+onclick="copyTrackingId()"
+class="btn btn-outline-danger btn-main mt-3">
+
+<i class="bi bi-copy"></i>
+
+Copy Tracking ID
+
+</button>
+
+<hr>
+
+<h6 class="mt-4">
+
+Current Status
+
+</h6>
+
+<span class="badge bg-success fs-6">
+
+Booked
+
+</span>
+
+</div>
+
+</div>
+
+<!-- ================= RIGHT SIDE START ================= -->
+
+<div class="col-lg-7">
+<div class="main-card">
+
+<div class="text-center mb-4">
+
+<img
+th:src="@{/images/location.png}"
+class="location-img mb-4">
+
+<h3 class="fw-bold">
+
+Booking Summary
+
+</h3>
+
+<p class="text-muted">
+
+Your shipment details are shown below.
+
+</p>
+
+</div>
+
+<hr>
+
+<div class="row">
+
+<div class="col-md-6 mb-4">
+
+<h5 class="fw-bold text-primary">
+
+<i class="bi bi-person-fill"></i>
+
+Sender Details
+
+</h5>
+
+<p>
+
+<b>Name :</b>
+
+<span th:text="${parcel.senderName}"></span>
+
+</p>
+
+<p>
+
+<b>Mobile :</b>
+
+<span th:text="${parcel.senderMobile}"></span>
+
+</p>
+
+<p>
+
+<b>Address :</b>
+
+<span th:text="${parcel.senderAddress}"></span>
+
+</p>
+
+</div>
+
+<div class="col-md-6 mb-4">
+
+<h5 class="fw-bold text-success">
+
+<i class="bi bi-geo-alt-fill"></i>
+
+Receiver Details
+
+</h5>
+
+<p>
+
+<b>Name :</b>
+
+<span th:text="${parcel.receiverName}"></span>
+
+</p>
+
+<p>
+
+<b>Mobile :</b>
+
+<span th:text="${parcel.receiverMobile}"></span>
+
+</p>
+
+<p>
+
+<b>Address :</b>
+
+<span th:text="${parcel.receiverAddress}"></span>
+
+</p>
+
+</div>
+
+</div>
+
+<hr>
+
+<div class="row text-center">
+
+<div class="col-md-4">
+
+<h6 class="text-muted">
+
+Weight
+
+</h6>
+
+<h4
+th:text="${parcel.weight}+' KG'">
+
+1 KG
+
+</h4>
+
+</div>
+
+<div class="col-md-4">
+
+<h6 class="text-muted">
+
+Parcel Type
+
+</h6>
+
+<h4
+th:text="${parcel.parcelType}">
+
+Document
+
+</h4>
+
+</div>
+
+<div class="col-md-4">
+
+<h6 class="text-muted">
+
+Status
+
+</h6>
+
+<h4 class="text-success">
+
+Booked
+
+</h4>
+
+</div>
+
+</div>
+
+<hr>
+
+<div class="text-center mt-4">
+<a
+th:href="@{/track}"
+class="btn btn-danger btn-main me-3">
+
+<i class="bi bi-search"></i>
+
+Track Parcel
+
+</a>
+
+<a
+th:href="@{/dashboard}"
+class="btn btn-primary btn-main">
+
+<i class="bi bi-house-fill"></i>
+
+Dashboard
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+<div class="container">
+
+<h4 class="fw-bold">
+
+EasyShip Courier
+
+</h4>
+
+<p class="mt-3">
+
+Fast • Secure • Reliable Courier Services
+
+</p>
+
+<p>
+
+© 2026 EasyShip Courier. All Rights Reserved.
+
+</p>
+
+</div>
+
+</footer>
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+function copyTrackingId(){
+
+let id=document.getElementById("trackingId").innerText;
+
+navigator.clipboard.writeText(id);
+
+alert("Tracking ID Copied Successfully");
+
+}
+
+</script>
+
+</body>
+
+</html>

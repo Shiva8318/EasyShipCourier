@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tracking Result | EasyShip Courier</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+
+background:#f5f7fb;
+
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+
+background:#0d6efd;
+
+box-shadow:0 5px 15px rgba(0,0,0,.15);
+
+}
+
+.navbar-brand{
+
+font-size:28px;
+
+font-weight:700;
+
+color:white!important;
+
+}
+
+.nav-btn{
+
+border-radius:30px;
+
+padding:8px 22px;
+
+font-weight:600;
+
+}
+
+/* ================= HERO ================= */
+
+.hero{
+
+background:linear-gradient(135deg,#0d6efd,#4dabff);
+
+color:white;
+
+padding:70px 20px;
+
+text-align:center;
+
+}
+
+.hero i{
+
+font-size:65px;
+
+margin-bottom:15px;
+
+}
+
+.hero h1{
+
+font-size:42px;
+
+font-weight:700;
+
+}
+
+.hero p{
+
+font-size:18px;
+
+margin-top:12px;
+
+opacity:.95;
+
+}
+
+/* ================= MAIN CARD ================= */
+
+.result-card{
+
+background:white;
+
+margin-top:-50px;
+
+border-radius:25px;
+
+padding:40px;
+
+box-shadow:0 15px 40px rgba(0,0,0,.12);
+
+position:relative;
+
+z-index:10;
+
+}
+
+.info-box{
+
+background:#f8f9fa;
+
+padding:20px;
+
+border-radius:18px;
+
+margin-bottom:20px;
+
+}
+
+.info-title{
+
+font-size:18px;
+
+font-weight:700;
+
+color:#0d6efd;
+
+margin-bottom:15px;
+
+}
+
+.status{
+
+display:inline-block;
+
+padding:8px 20px;
+
+border-radius:30px;
+
+background:#198754;
+
+color:white;
+
+font-weight:600;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar navbar-expand-lg">
+
+<div class="container">
+
+<a class="navbar-brand"
+th:href="@{/dashboard}">
+
+EasyShip Courier
+
+</a>
+
+<div>
+
+<a th:href="@{/track}"
+class="btn btn-light nav-btn me-2">
+
+Track Again
+
+</a>
+
+<a th:href="@{/dashboard}"
+class="btn btn-warning nav-btn me-2">
+
+Dashboard
+
+</a>
+
+<a th:href="@{/logout}"
+class="btn btn-danger nav-btn">
+
+Logout
+
+</a>
+
+</div>
+
+</div>
+
+</nav>
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+<div class="container">
+
+<i class="bi bi-geo-alt-fill"></i>
+
+<h1>
+
+Parcel Tracking Result
+
+</h1>
+
+<p>
+
+Your shipment details are displayed below.
+
+</p>
+
+</div>
+
+</section>
+
+<div class="container">
+
+<div class="result-card">
+
+<div class="row align-items-center">
+
+<div class="col-lg-8">
+
+<h2 class="fw-bold text-primary">
+
+Tracking Details
+
+</h2>
+
+<p class="text-muted">
+
+EasyShip Courier Live Tracking System
+
+</p>
+
+</div>
+
+<div class="col-lg-4 text-lg-end text-center">
+
+<span class="status"
+
+th:text="${parcel.status}">
+
+Booked
+
+</span>
+
+</div>
+
+</div>
+
+<hr class="my-4">
+<div class="row">
+
+    <!-- ================= TRACKING ID ================= -->
+
+    <div class="col-md-6">
+
+        <div class="info-box">
+
+            <div class="info-title">
+
+                <i class="bi bi-upc-scan"></i>
+
+                Tracking ID
+
+            </div>
+
+            <h3 class="fw-bold text-danger"
+                id="trackingId"
+                th:text="${parcel.trackingId}">
+
+                ESA1B2C3D
+
+            </h3>
+
+            <button class="btn btn-outline-primary mt-3"
+                    onclick="copyTrackingId()">
+
+                <i class="bi bi-clipboard"></i>
+
+                Copy Tracking ID
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ================= PARCEL SUMMARY ================= -->
+
+    <div class="col-md-6">
+
+        <div class="info-box">
+
+            <div class="info-title">
+
+                <i class="bi bi-box-seam"></i>
+
+                Parcel Summary
+
+            </div>
+
+            <p>
+
+                <strong>Parcel Type :</strong>
+
+                <span th:text="${parcel.parcelType}">
+
+                    Box
+
+                </span>
+
+            </p>
+
+            <p>
+
+                <strong>Weight :</strong>
+
+                <span th:text="${parcel.weight}">
+
+                    2
+
+                </span>
+
+                KG
+
+            </p>
+
+            <p>
+
+                <strong>Current Status :</strong>
+
+                <span class="text-success fw-bold"
+                      th:text="${parcel.status}">
+
+                    Booked
+
+                </span>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<hr class="my-4">
+
+<div class="row">
+
+    <!-- ================= SENDER ================= -->
+
+    <div class="col-lg-6">
+
+        <div class="info-box">
+
+            <div class="info-title">
+
+                <i class="bi bi-person-fill"></i>
+
+                Sender Details
+
+            </div>
+
+            <p>
+
+                <strong>Name :</strong>
+
+                <span th:text="${parcel.senderName}">
+
+                    Shiva
+
+                </span>
+
+            </p>
+
+            <p>
+
+                <strong>Mobile :</strong>
+
+                <span th:text="${parcel.senderMobile}">
+
+                    9876543210
+
+                </span>
+
+            </p>
+
+            <p>
+
+                <strong>Address :</strong>
+
+            </p>
+
+            <p class="text-muted"
+               th:text="${parcel.senderAddress}">
+
+                Greater Noida
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- ================= RECEIVER ================= -->
+
+    <div class="col-lg-6">
+
+        <div class="info-box">
+
+            <div class="info-title">
+
+                <i class="bi bi-geo-alt-fill"></i>
+
+                Receiver Details
+
+            </div>
+
+            <p>
+
+                <strong>Name :</strong>
+
+                <span th:text="${parcel.receiverName}">
+
+                    Aman
+
+                </span>
+
+            </p>
+
+            <p>
+
+                <strong>Mobile :</strong>
+
+                <span th:text="${parcel.receiverMobile}">
+
+                    9876543210
+
+                </span>
+
+            </p>
+
+            <p>
+
+                <strong>Address :</strong>
+
+            </p>
+
+            <p class="text-muted"
+               th:text="${parcel.receiverAddress}">
+
+                Delhi
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<hr class="my-4">
+
+<div class="row text-center">
+
+    <div class="col-md-4">
+
+        <div class="info-box">
+
+            <i class="bi bi-box2 fs-1 text-primary"></i>
+
+            <h5 class="mt-3">
+
+                Parcel Type
+
+            </h5>
+
+            <h4 class="fw-bold"
+                th:text="${parcel.parcelType}">
+
+                Box
+
+            </h4>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="info-box">
+
+            <i class="bi bi-speedometer2 fs-1 text-success"></i>
+
+            <h5 class="mt-3">
+
+                Weight
+
+            </h5>
+
+            <h4 class="fw-bold">
+
+                <span th:text="${parcel.weight}">
+
+                    2
+
+                </span>
+
+                KG
+
+            </h4>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="info-box">
+
+            <i class="bi bi-truck fs-1 text-danger"></i>
+
+            <h5 class="mt-3">
+
+                Delivery Status
+
+            </h5>
+
+            <h4 class="fw-bold text-success"
+                th:text="${parcel.status}">
+
+                Booked
+
+            </h4>
+
+        </div>
+
+    </div>
+
+</div>
+
+<hr class="my-5">
+<!-- ================= DELIVERY TIMELINE ================= -->
+
+<h3 class="text-center fw-bold text-primary mb-5">
+
+    <i class="bi bi-truck"></i>
+
+    Delivery Timeline
+
+</h3>
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-8">
+
+        <ul class="timeline list-unstyled">
+
+            <li class="completed">
+
+                <div class="icon">
+
+                    <i class="bi bi-check-circle-fill"></i>
+
+                </div>
+
+                <div class="content">
+
+                    <h5>Parcel Booked</h5>
+
+                    <p>
+
+                        Your parcel has been booked successfully.
+
+                    </p>
+
+                </div>
+
+            </li>
+
+            <li th:classappend="${parcel.status=='Picked Up'
+                || parcel.status=='In Transit'
+                || parcel.status=='Out For Delivery'
+                || parcel.status=='Delivered'} ? 'completed'">
+
+                <div class="icon">
+
+                    <i class="bi bi-box-seam"></i>
+
+                </div>
+
+                <div class="content">
+
+                    <h5>Picked Up</h5>
+
+                    <p>
+
+                        Parcel has been collected from the sender.
+
+                    </p>
+
+                </div>
+
+            </li>
+
+            <li th:classappend="${parcel.status=='In Transit'
+                || parcel.status=='Out For Delivery'
+                || parcel.status=='Delivered'} ? 'completed'">
+
+                <div class="icon">
+
+                    <i class="bi bi-truck"></i>
+
+                </div>
+
+                <div class="content">
+
+                    <h5>In Transit</h5>
+
+                    <p>
+
+                        Parcel is moving towards the destination city.
+
+                    </p>
+
+                </div>
+
+            </li>
+
+            <li th:classappend="${parcel.status=='Out For Delivery'
+                || parcel.status=='Delivered'} ? 'completed'">
+
+                <div class="icon">
+
+                    <i class="bi bi-geo-alt-fill"></i>
+
+                </div>
+
+                <div class="content">
+
+                    <h5>Out For Delivery</h5>
+
+                    <p>
+
+                        Courier partner is delivering your parcel.
+
+                    </p>
+
+                </div>
+
+            </li>
+
+            <li th:classappend="${parcel.status=='Delivered'} ? 'completed'">
+
+                <div class="icon">
+
+                    <i class="bi bi-house-check-fill"></i>
+
+                </div>
+
+                <div class="content">
+
+                    <h5>Delivered</h5>
+
+                    <p>
+
+                        Parcel delivered successfully.
+
+                    </p>
+
+                </div>
+
+            </li>
+
+        </ul>
+
+    </div>
+
+</div>
+
+<style>
+
+.timeline{
+
+position:relative;
+
+padding-left:40px;
+
+}
+
+.timeline::before{
+
+content:"";
+
+position:absolute;
+
+left:18px;
+
+top:0;
+
+width:4px;
+
+height:100%;
+
+background:#d6d6d6;
+
+}
+
+.timeline li{
+
+position:relative;
+
+margin-bottom:35px;
+
+padding-left:35px;
+
+}
+
+.timeline li .icon{
+
+position:absolute;
+
+left:-3px;
+
+top:0;
+
+width:42px;
+
+height:42px;
+
+border-radius:50%;
+
+background:#adb5bd;
+
+color:white;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:20px;
+
+}
+
+.timeline li.completed .icon{
+
+background:#198754;
+
+}
+
+.timeline li h5{
+
+font-weight:700;
+
+margin-bottom:8px;
+
+}
+
+.timeline li p{
+
+color:#666;
+
+margin:0;
+
+}
+
+</style>
+
+<hr class="my-5">
+<!-- ================= ACTION BUTTONS ================= -->
+
+<div class="text-center mt-4">
+
+    <button class="btn btn-success btn-lg me-2"
+            onclick="window.print()">
+
+        <i class="bi bi-printer-fill"></i>
+
+        Print Receipt
+
+    </button>
+
+    <button class="btn btn-outline-primary btn-lg me-2"
+            onclick="copyTrackingId()">
+
+        <i class="bi bi-clipboard"></i>
+
+        Copy Tracking ID
+
+    </button>
+
+    <a th:href="@{/track}"
+       class="btn btn-primary btn-lg me-2">
+
+        <i class="bi bi-search"></i>
+
+        Track Another Parcel
+
+    </a>
+
+    <a th:href="@{/dashboard}"
+       class="btn btn-dark btn-lg">
+
+        <i class="bi bi-house-door-fill"></i>
+
+        Dashboard
+
+    </a>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="bg-dark text-white mt-5 py-5">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <h4 class="fw-bold">
+
+                    EasyShip Courier
+
+                </h4>
+
+                <p class="text-light">
+
+                    Fast, Secure & Reliable Courier Service.
+
+                    Delivering parcels safely across India.
+
+                </p>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <h5>
+
+                    Quick Links
+
+                </h5>
+
+                <ul class="list-unstyled">
+
+                    <li class="mb-2">
+
+                        <a th:href="@{/dashboard}"
+                           class="text-white text-decoration-none">
+
+                            Dashboard
+
+                        </a>
+
+                    </li>
+
+                    <li class="mb-2">
+
+                        <a th:href="@{/bookparcel}"
+                           class="text-white text-decoration-none">
+
+                            Book Parcel
+
+                        </a>
+
+                    </li>
+
+                    <li class="mb-2">
+
+                        <a th:href="@{/myorders}"
+                           class="text-white text-decoration-none">
+
+                            My Orders
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a th:href="@{/track}"
+                           class="text-white text-decoration-none">
+
+                            Track Parcel
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <h5>
+
+                    Contact Us
+
+                </h5>
+
+                <p>
+
+                    <i class="bi bi-envelope-fill"></i>
+
+                    support@easyship.com
+
+                </p>
+
+                <p>
+
+                    <i class="bi bi-telephone-fill"></i>
+
+                    +91 9876543210
+
+                </p>
+
+                <p>
+
+                    <i class="bi bi-geo-alt-fill"></i>
+
+                    Greater Noida, India
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div class="text-center">
+
+            <p class="mb-0">
+
+                © 2026 EasyShip Courier. All Rights Reserved.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+<script>
+
+function copyTrackingId(){
+
+    let id=document.getElementById("trackingId").innerText;
+
+    navigator.clipboard.writeText(id);
+
+    alert("Tracking ID Copied Successfully!");
+
+}
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Manage Parcels | EasyShip Courier</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#eef3f9;
+overflow-x:hidden;
+}
+
+/*================ SIDEBAR ================*/
+
+.sidebar{
+
+position:fixed;
+
+left:0;
+top:0;
+
+width:270px;
+height:100vh;
+
+background:linear-gradient(180deg,#081420,#0e2745);
+
+padding:30px 20px;
+
+box-shadow:8px 0 25px rgba(0,0,0,.25);
+
+z-index:1000;
+
+}
+
+.logo{
+
+text-align:center;
+
+margin-bottom:40px;
+
+}
+
+.logo img{
+
+width:75px;
+
+}
+
+.logo h3{
+
+color:#fff;
+
+margin-top:15px;
+
+font-weight:700;
+
+}
+
+.sidebar a{
+
+display:block;
+
+padding:15px 20px;
+
+margin-bottom:10px;
+
+border-radius:15px;
+
+text-decoration:none;
+
+color:#d7e7f6;
+
+transition:.3s;
+
+}
+
+.sidebar a:hover{
+
+background:#0d6efd;
+
+color:white;
+
+transform:translateX(8px);
+
+}
+
+.sidebar .active{
+
+background:#0d6efd;
+
+color:white;
+
+}
+
+/*================ MAIN =================*/
+
+.main{
+
+margin-left:270px;
+
+min-height:100vh;
+
+}
+
+/*================ TOPBAR =================*/
+
+.topbar{
+
+height:80px;
+
+background:white;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:0 40px;
+
+box-shadow:0 5px 20px rgba(0,0,0,.08);
+
+position:sticky;
+
+top:0;
+
+z-index:999;
+
+}
+
+.search-box{
+
+width:350px;
+
+}
+
+.profile{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+}
+
+.profile img{
+
+width:50px;
+
+height:50px;
+
+border-radius:50%;
+
+border:3px solid #0d6efd;
+
+}
+
+/*================ PAGE =================*/
+
+.page{
+
+padding:35px;
+
+}
+
+.page-title{
+
+font-size:34px;
+
+font-weight:700;
+
+margin-bottom:10px;
+
+}
+
+.page-sub{
+
+color:#666;
+
+margin-bottom:35px;
+
+}
+
+/*================ CARD =================*/
+
+.table-card{
+
+background:white;
+
+border-radius:25px;
+
+padding:30px;
+
+box-shadow:0 15px 35px rgba(0,0,0,.08);
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+<div class="logo">
+
+<img th:src="@{/images/logo.png}">
+
+<h3>EasyShip</h3>
+
+</div>
+
+<a th:href="@{/admindashboard}">
+
+<i class="bi bi-grid-fill"></i>
+
+Dashboard
+
+</a>
+
+<a class="active" th:href="@{/manageparcels}">
+
+<i class="bi bi-box-seam-fill"></i>
+
+Manage Parcels
+
+</a>
+
+<a th:href="@{/manageusers}">
+
+<i class="bi bi-people-fill"></i>
+
+Manage Users
+
+</a>
+
+<a th:href="@{/track}">
+
+<i class="bi bi-search"></i>
+
+Track Parcel
+
+</a>
+
+<a th:href="@{/logout}">
+
+<i class="bi bi-box-arrow-right"></i>
+
+Logout
+
+</a>
+
+</div>
+
+<!-- Main -->
+
+<div class="main">
+
+<!-- Topbar -->
+
+<div class="topbar">
+
+<div>
+
+<h4 class="mb-0">
+
+Manage Parcels
+
+</h4>
+
+<small class="text-muted">
+
+Courier Management System
+
+</small>
+
+</div>
+
+<div class="profile">
+
+<input
+id="searchInput"
+type="text"
+class="form-control search-box"
+placeholder="Search Tracking ID">
+
+<img th:src="@{/images/me1.jpeg}" alt="Admin" class="rounded-circle">
+
+</div>
+
+</div>
+
+<!-- Page -->
+
+<div class="page">
+
+<h2 class="page-title">
+
+Parcel Management
+
+</h2>
+
+<p class="page-sub">
+
+Manage every booking, update parcel status and monitor deliveries.
+
+</p>
+
+<div th:if="${success}"
+class="alert alert-success">
+
+<i class="bi bi-check-circle-fill"></i>
+
+<span th:text="${success}"></span>
+
+</div>
+
+<div class="table-card">
+<!-- Table Header -->
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h4 class="fw-bold mb-0">
+
+        <i class="bi bi-box-seam-fill text-primary"></i>
+
+        All Parcel Orders
+
+    </h4>
+
+    <span class="badge bg-primary fs-6">
+
+        Total :
+        <span th:text="${#lists.size(parcelList)}"></span>
+
+    </span>
+
+</div>
+
+<div class="table-responsive">
+
+<table class="table table-hover align-middle">
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Tracking ID</th>
+
+<th>Sender</th>
+
+<th>Receiver</th>
+
+<th>Weight</th>
+
+<th>Type</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr th:each="parcel : ${parcelList}">
+
+<td th:text="${parcel.id}"></td>
+
+<td>
+
+<span class="fw-bold text-primary"
+
+th:text="${parcel.trackingId}">
+
+</span>
+
+</td>
+
+<td th:text="${parcel.senderName}"></td>
+
+<td th:text="${parcel.receiverName}"></td>
+
+<td>
+
+<span th:text="${parcel.weight}"></span>
+
+ KG
+
+</td>
+
+<td th:text="${parcel.parcelType}"></td>
+
+<td>
+
+<form th:action="@{/updateStatus}"
+
+method="post"
+
+class="d-flex align-items-center gap-2">
+
+<input
+type="hidden"
+name="id"
+th:value="${parcel.id}">
+
+<select
+name="status"
+class="form-select form-select-sm">
+
+<option value="Booked"
+
+th:selected="${parcel.status=='Booked'}">
+
+Booked
+
+</option>
+
+<option value="Picked Up"
+
+th:selected="${parcel.status=='Picked Up'}">
+
+Picked Up
+
+</option>
+
+<option value="In Transit"
+
+th:selected="${parcel.status=='In Transit'}">
+
+In Transit
+
+</option>
+
+<option value="Out For Delivery"
+
+th:selected="${parcel.status=='Out For Delivery'}">
+
+Out For Delivery
+
+</option>
+
+<option value="Delivered"
+
+th:selected="${parcel.status=='Delivered'}">
+
+Delivered
+
+</option>
+
+</select>
+
+</td>
+
+<td>
+
+<button
+
+class="btn btn-success btn-sm"
+
+onclick="return confirm('Update Parcel Status ?')">
+
+<i class="bi bi-check-circle-fill"></i>
+
+Update
+
+</button>
+
+</form>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const searchInput=document.getElementById("searchInput");
+
+searchInput.addEventListener("keyup",function(){
+
+let filter=searchInput.value.toUpperCase();
+
+let rows=document.querySelectorAll("tbody tr");
+
+rows.forEach(function(row){
+
+let tracking=row.cells[1].textContent;
+
+let sender=row.cells[2].textContent;
+
+let receiver=row.cells[3].textContent;
+
+if(
+
+tracking.toUpperCase().indexOf(filter)>-1 ||
+
+sender.toUpperCase().indexOf(filter)>-1 ||
+
+receiver.toUpperCase().indexOf(filter)>-1
+
+){
+
+row.style.display="";
+
+}
+
+else{
+
+row.style.display="none";
+
+}
+
+});
+
+});
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

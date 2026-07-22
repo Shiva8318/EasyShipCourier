@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>My Orders | EasyShip Courier</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f5f7fa;
+}
+
+.navbar{
+
+background:#111827;
+
+padding:15px 0;
+
+}
+
+.navbar-brand{
+
+color:#fff!important;
+
+font-size:28px;
+
+font-weight:700;
+
+}
+
+.hero{
+
+background:linear-gradient(135deg,#f5fbff,#eef8ff);
+
+padding:70px 20px;
+
+text-align:center;
+
+}
+
+.hero h1{
+
+font-size:42px;
+
+font-weight:700;
+
+color:#0d6efd;
+
+}
+
+.hero p{
+
+font-size:18px;
+
+color:#666;
+
+margin-top:10px;
+
+}
+
+.search-box{
+
+background:#fff;
+
+padding:25px;
+
+border-radius:20px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+margin-top:-35px;
+
+position:relative;
+
+z-index:5;
+
+}
+
+.summary-card{
+
+background:white;
+
+padding:25px;
+
+border-radius:20px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+transition:.3s;
+
+text-align:center;
+
+}
+
+.summary-card:hover{
+
+transform:translateY(-6px);
+
+}
+
+.summary-card i{
+
+font-size:40px;
+
+color:#dc3545;
+
+margin-bottom:10px;
+
+}
+
+.table-box{
+
+background:white;
+
+border-radius:20px;
+
+padding:25px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+margin-top:30px;
+
+}
+
+.status{
+
+padding:7px 18px;
+
+border-radius:30px;
+
+font-size:14px;
+
+font-weight:600;
+
+}
+
+.booked{
+
+background:#0d6efd;
+
+color:white;
+
+}
+
+.transit{
+
+background:#ffc107;
+
+color:black;
+
+}
+
+.delivered{
+
+background:#198754;
+
+color:white;
+
+}
+
+.btn{
+
+border-radius:30px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg">
+
+<div class="container">
+
+<a class="navbar-brand"
+th:href="@{/dashboard}">
+
+EasyShip Courier
+
+</a>
+
+<div>
+
+<a
+th:href="@{/dashboard}"
+class="btn btn-light me-2">
+
+Dashboard
+
+</a>
+
+<a
+th:href="@{/logout}"
+class="btn btn-danger">
+
+Logout
+
+</a>
+
+</div>
+
+</div>
+
+</nav>
+
+<section class="hero">
+
+<div class="container">
+
+<h1>
+
+My Orders
+
+</h1>
+
+<p>
+
+View and manage all your courier bookings.
+
+</p>
+
+</div>
+
+</section>
+
+<div class="container">
+
+<div class="search-box">
+
+<div class="row">
+
+<div class="col-md-10">
+
+<input
+type="text"
+id="searchInput"
+class="form-control"
+placeholder="Search by Tracking ID...">
+
+</div>
+
+<div class="col-md-2">
+
+<button class="btn btn-danger w-100">
+
+<i class="bi bi-search"></i>
+
+Search
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+<!-- ================= SUMMARY CARDS ================= -->
+
+<div class="row mt-5 g-4">
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="summary-card">
+
+            <i class="bi bi-box-seam"></i>
+
+            <h2 th:text="${parcels.size()}">0</h2>
+
+            <h5>Total Orders</h5>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="summary-card">
+
+            <i class="bi bi-clock-history"></i>
+
+            <h2 class="text-primary">Booked</h2>
+
+            <p class="text-muted">
+                Newly Booked Parcels
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="summary-card">
+
+            <i class="bi bi-truck"></i>
+
+            <h2 class="text-warning">Transit</h2>
+
+            <p class="text-muted">
+                Parcels In Transit
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+
+        <div class="summary-card">
+
+            <i class="bi bi-check-circle-fill"></i>
+
+            <h2 class="text-success">Delivered</h2>
+
+            <p class="text-muted">
+                Successfully Delivered
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= TABLE START ================= -->
+
+<div class="table-box">
+
+<h3 class="mb-4 fw-bold">
+
+<i class="bi bi-list-ul"></i>
+
+All Orders
+
+</h3>
+<div class="table-responsive">
+
+<table class="table table-hover align-middle">
+
+<thead class="table-dark">
+
+<tr>
+
+<th>#</th>
+
+<th>Tracking ID</th>
+
+<th>Sender</th>
+
+<th>Receiver</th>
+
+<th>Weight</th>
+
+<th>Type</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr th:each="parcel,stat : ${parcels}">
+
+<td th:text="${stat.count}"></td>
+
+<td class="fw-bold text-danger"
+th:text="${parcel.trackingId}">
+</td>
+
+<td th:text="${parcel.senderName}">
+</td>
+
+<td th:text="${parcel.receiverName}">
+</td>
+
+<td th:text="${parcel.weight}+' KG'">
+</td>
+
+<td th:text="${parcel.parcelType}">
+</td>
+
+<td>
+
+<span class="badge bg-primary"
+
+th:if="${parcel.status=='Booked'}"
+
+th:text="${parcel.status}">
+
+</span>
+
+<span class="badge bg-secondary"
+
+th:if="${parcel.status=='Picked Up'}"
+
+th:text="${parcel.status}">
+
+</span>
+
+<span class="badge bg-warning text-dark"
+
+th:if="${parcel.status=='In Transit'}"
+
+th:text="${parcel.status}">
+
+</span>
+
+<span class="badge bg-info"
+
+th:if="${parcel.status=='Out For Delivery'}"
+
+th:text="${parcel.status}">
+
+</span>
+
+<span class="badge bg-success"
+
+th:if="${parcel.status=='Delivered'}"
+
+th:text="${parcel.status}">
+
+</span>
+
+</td>
+
+<td>
+
+<a
+th:href="@{/viewparcel/{id}(id=${parcel.id})}"
+class="btn btn-sm btn-primary">
+
+<i class="bi bi-eye-fill"></i>
+
+View
+
+</a>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+
+</div>
+</div>
+
+</div>
+
+<footer class="bg-dark text-white mt-5 py-4">
+
+<div class="container text-center">
+
+<h4 class="fw-bold">
+
+EasyShip Courier
+
+</h4>
+
+<p class="text-secondary">
+
+Fast • Secure • Reliable Courier Service
+
+</p>
+
+<p>
+
+© 2026 EasyShip Courier. All Rights Reserved.
+
+</p>
+
+</div>
+
+</footer>
+
+<script>
+
+const searchInput=document.getElementById("searchInput");
+
+searchInput.addEventListener("keyup",function(){
+
+let value=this.value.toLowerCase();
+
+let rows=document.querySelectorAll("tbody tr");
+
+rows.forEach(function(row){
+
+let tracking=row.cells[1].innerText.toLowerCase();
+
+let sender=row.cells[2].innerText.toLowerCase();
+
+let receiver=row.cells[3].innerText.toLowerCase();
+
+if(
+
+tracking.includes(value)
+
+||
+
+sender.includes(value)
+
+||
+
+receiver.includes(value)
+
+){
+
+row.style.display="";
+
+}
+
+else{
+
+row.style.display="none";
+
+}
+
+});
+
+});
+
+</script>
+
+</body>
+
+</html>

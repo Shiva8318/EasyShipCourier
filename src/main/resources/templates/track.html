@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Track Parcel | EasyShip Courier</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #f4f7fc;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            background: #0d6efd;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, .15);
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .nav-btn {
+            border-radius: 30px;
+            padding: 8px 22px;
+            font-weight: 600;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            background: linear-gradient(135deg, #0d6efd, #4dabff);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero i {
+            font-size: 70px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-top: 15px;
+            opacity: .95;
+        }
+
+        /* ================= SEARCH CARD ================= */
+
+        .search-card {
+            background: white;
+            max-width: 750px;
+            margin: -60px auto 0;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, .12);
+            position: relative;
+            z-index: 100;
+        }
+
+        .search-card h3 {
+            text-align: center;
+            font-weight: 700;
+            color: #0d6efd;
+            margin-bottom: 30px;
+        }
+
+        .form-control {
+            height: 55px;
+            border-radius: 30px;
+            padding-left: 20px;
+            font-size: 17px;
+        }
+
+        .btn-track {
+            height: 55px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .info-box {
+            margin-top: 35px;
+            text-align: center;
+        }
+
+        .info-box i {
+            font-size: 45px;
+            color: #0d6efd;
+            margin-bottom: 15px;
+        }
+
+        .info-box h5 {
+            font-weight: 600;
+        }
+
+        .info-box p {
+            color: #666;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar navbar-expand-lg">
+
+        <div class="container">
+
+            <a class="navbar-brand" th:href="@{/dashboard}">
+
+                EasyShip Courier
+
+            </a>
+
+            <div>
+
+                <a th:href="@{/dashboard}" class="btn btn-light nav-btn me-2">
+
+                    Dashboard
+
+                </a>
+
+                <a th:href="@{/myorders}" class="btn btn-warning nav-btn me-2">
+
+                    My Orders
+
+                </a>
+
+                <a th:href="@{/logout}" class="btn btn-danger nav-btn">
+
+                    Logout
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+    <!-- ================= HERO ================= -->
+
+    <section class="hero">
+
+        <div class="container">
+
+            <i class="bi bi-truck"></i>
+
+            <h1>
+
+                Track Your Parcel
+
+            </h1>
+
+            <p>
+
+                Enter your Tracking ID to check the live delivery status of your shipment.
+
+            </p>
+
+        </div>
+
+    </section>
+
+    <div class="container">
+
+        <div class="search-card">
+
+            <h3>
+
+                Search Parcel
+
+            </h3>
+            <form th:action="@{/trackparcel}" method="post">
+
+    <div class="input-group mb-3">
+
+        <input type="text"
+               class="form-control"
+               name="trackingId"
+               placeholder="Enter Tracking ID (Example : ESA1B2C3D)"
+               required>
+
+        <button class="btn btn-primary btn-track" type="submit">
+
+            <i class="bi bi-search"></i>
+
+            Track Now
+
+        </button>
+
+    </div>
+
+</form>
+
+<div th:if="${error}" class="alert alert-danger text-center mt-3">
+
+    <i class="bi bi-exclamation-triangle-fill"></i>
+
+    <span th:text="${error}"></span>
+
+</div>
+
+<hr class="my-5">
+
+<div class="row text-center">
+
+    <div class="col-md-4">
+
+        <div class="info-box">
+
+            <i class="bi bi-lightning-charge-fill"></i>
+
+            <h5>Fast Delivery</h5>
+
+            <p>
+
+                We ensure quick and timely parcel delivery across India.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="info-box">
+
+            <i class="bi bi-shield-check"></i>
+
+            <h5>Secure Shipment</h5>
+
+            <p>
+
+                Every parcel is handled safely with complete protection.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="info-box">
+
+            <i class="bi bi-geo-alt-fill"></i>
+
+            <h5>Live Tracking</h5>
+
+            <p>
+
+                Track your parcel anytime using your unique Tracking ID.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+</div>
+<!-- ================= FOOTER ================= -->
+
+<footer class="bg-dark text-white mt-5 py-4">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <h4 class="fw-bold">
+
+                    EasyShip Courier
+
+                </h4>
+
+                <p class="text-light">
+
+                    Fast, Secure and Reliable Courier Service.
+
+                    Track your shipment anytime, anywhere with your unique
+                    Tracking ID.
+
+                </p>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h5>Quick Links</h5>
+
+                <ul class="list-unstyled">
+
+                    <li>
+
+                        <a th:href="@{/dashboard}"
+                           class="text-white text-decoration-none">
+
+                            Dashboard
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a th:href="@{/bookparcel}"
+                           class="text-white text-decoration-none">
+
+                            Book Parcel
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a th:href="@{/myorders}"
+                           class="text-white text-decoration-none">
+
+                            My Orders
+
+                        </a>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h5>Contact</h5>
+
+                <p>
+
+                    <i class="bi bi-envelope-fill"></i>
+
+                    support@easyship.com
+
+                </p>
+
+                <p>
+
+                    <i class="bi bi-telephone-fill"></i>
+
+                    +91 9876543210
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div class="text-center">
+
+            © 2026 EasyShip Courier. All Rights Reserved.
+
+        </div>
+
+    </div>
+
+</footer>
+
+<script>
+
+const input=document.querySelector("input[name='trackingId']");
+
+input.addEventListener("input",function(){
+
+    this.value=this.value.toUpperCase();
+
+});
+
+input.addEventListener("keypress",function(e){
+
+    if(e.key==="Enter"){
+
+        this.form.submit();
+
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>

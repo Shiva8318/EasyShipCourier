@@ -1,0 +1,1075 @@
+@charset "UTF-8";
+
+/*=================================
+        GLOBAL
+==================================*/
+
+html{
+    scroll-behavior:smooth;
+}
+
+::selection{
+    background:#e31837;
+    color:#fff;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:#fff;
+    overflow-x:hidden;
+}
+
+a{
+    text-decoration:none;
+}
+
+ul{
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+.container{
+    max-width:1320px;
+}
+
+/*=================================
+        NAVBAR
+==================================*/
+
+.custom-navbar{
+
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:999;
+
+    padding:18px 0;
+
+    backdrop-filter:blur(12px);
+
+    transition:.4s;
+
+}
+
+.navbar-brand img{
+
+    height:70px;
+
+}
+
+.nav-link{
+
+    color:#fff !important;
+
+    font-size:17px;
+
+    font-weight:500;
+
+    margin-left:18px;
+
+    position:relative;
+
+}
+
+.nav-link::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    bottom:-5px;
+
+    width:0;
+
+    height:2px;
+
+    background:#e31837;
+
+    transition:.4s;
+
+}
+
+.nav-link:hover::after{
+
+    width:100%;
+
+}
+
+.btn-outline-light{
+
+    border-radius:40px;
+
+    padding:10px 28px;
+
+    font-weight:600;
+
+}
+
+.btn-danger{
+
+    background:#e31837;
+
+    border:none;
+
+    border-radius:40px;
+
+    padding:10px 28px;
+
+    font-weight:600;
+
+}
+
+.btn-danger:hover{
+
+    background:#bf1530;
+
+}
+
+/*=================================
+        HERO
+==================================*/
+
+.hero{
+
+    position:relative;
+
+    width:100%;
+
+    height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    background:url("../images/truck.png")
+               center center/cover
+               no-repeat;
+
+}
+
+.overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:linear-gradient(
+
+        90deg,
+
+        rgba(0,0,0,.85),
+
+        rgba(0,0,0,.55),
+
+        rgba(0,0,0,.15)
+
+    );
+
+}
+
+.hero-content{
+
+    position:relative;
+
+    z-index:2;
+
+    max-width:650px;
+
+    animation:fadeUp 1s ease;
+
+}
+
+.hero-content h5{
+
+    color:#ff4d5f;
+
+    letter-spacing:5px;
+
+    font-size:18px;
+
+    margin-bottom:20px;
+
+    font-weight:600;
+
+}
+
+.hero-content h1{
+
+    color:#fff;
+
+    font-size:82px;
+
+    font-weight:800;
+
+    line-height:90px;
+
+    margin-bottom:25px;
+
+}
+
+.hero-content p{
+
+    color:#f2f2f2;
+
+    font-size:22px;
+
+    line-height:36px;
+
+    margin-bottom:40px;
+
+}
+
+.hero-content .btn{
+
+    padding:16px 35px;
+
+    border-radius:50px;
+
+    font-weight:600;
+
+    font-size:18px;
+
+    transition:.4s;
+
+    box-shadow:0 15px 30px rgba(0,0,0,.25);
+
+}
+
+.hero-content .btn:hover{
+
+    transform:translateY(-5px);
+
+}
+
+.hero-content .btn-light:hover{
+
+    background:#e31837;
+
+    color:#fff;
+
+}
+
+/*=================================
+        ANIMATION
+==================================*/
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(50px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/*=================================
+        RESPONSIVE
+==================================*/
+
+@media(max-width:992px){
+
+.hero{
+
+    height:auto;
+
+    padding:180px 0 120px;
+
+}
+
+.custom-navbar{
+
+    background:#111;
+
+}
+
+.nav-link{
+
+    margin-left:0;
+
+    padding:12px 0;
+
+}
+
+.hero-content h1{
+
+    font-size:58px;
+
+    line-height:65px;
+
+}
+
+.hero-content p{
+
+    font-size:18px;
+
+    line-height:30px;
+
+}
+
+}
+
+@media(max-width:576px){
+
+.navbar-brand img{
+
+    height:55px;
+
+}
+
+.hero-content{
+
+    text-align:center;
+
+}
+
+.hero-content h1{
+
+    font-size:42px;
+
+    line-height:50px;
+
+}
+
+.hero-content h5{
+
+    font-size:16px;
+
+    letter-spacing:4px;
+
+}
+
+.hero-content p{
+
+    font-size:16px;
+
+    line-height:28px;
+
+}
+
+.hero-content .btn{
+
+    width:100%;
+
+    margin-bottom:15px;
+
+}
+
+}
+/*=================================
+      TRACK SHIPMENT
+==================================*/
+
+.tracking-section{
+    position:relative;
+    margin-top:-70px;
+    z-index:20;
+}
+
+.tracking-card{
+    background:#fff;
+    padding:35px;
+    border-radius:20px;
+    box-shadow:0 20px 50px rgba(0,0,0,.15);
+}
+
+.tracking-card h3{
+    font-size:30px;
+    font-weight:700;
+    color:#111;
+    margin-bottom:10px;
+}
+
+.tracking-card p{
+    color:#666;
+    margin:0;
+}
+
+.track-input{
+    height:58px;
+    border-radius:50px;
+    padding:0 20px;
+    border:1px solid #ddd;
+    font-size:16px;
+}
+
+.track-input:focus{
+    box-shadow:none;
+    border-color:#e31837;
+}
+
+.track-btn{
+    height:58px;
+    border-radius:50px;
+    font-weight:600;
+    font-size:17px;
+}
+
+/*=================================
+      OUR SERVICES
+==================================*/
+
+.services{
+    padding:100px 0;
+    background:url("../images/warehouse.png") center center/cover no-repeat;
+}
+
+.service-title{
+    color:#e31837;
+    font-size:17px;
+    letter-spacing:3px;
+    font-weight:700;
+}
+
+.services h2{
+    color:#fff;
+    font-size:46px;
+    font-weight:700;
+    margin:10px 0;
+}
+
+.services>.container>.text-center>p{
+    color:#fff;
+}
+
+.service-card{
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(10px);
+    border-radius:22px;
+    padding:40px 25px;
+    text-align:center;
+    transition:.4s;
+    height:100%;
+    box-shadow:0 20px 40px rgba(0,0,0,.18);
+}
+
+.service-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 30px 60px rgba(0,0,0,.25);
+}
+
+.service-card i{
+    font-size:55px;
+    color:#e31837;
+    margin-bottom:20px;
+}
+
+.service-card h4{
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:15px;
+    color:#111;
+}
+
+.service-card p{
+    color:#666;
+    font-size:15px;
+    line-height:28px;
+}
+
+/*=================================
+      HOW IT WORKS
+==================================*/
+
+.how-section{
+    padding:100px 0;
+    background:#f5f7fa;
+}
+
+.how-card{
+    background:#fff;
+    border-radius:25px;
+    padding:60px;
+    box-shadow:0 20px 50px rgba(0,0,0,.10);
+}
+
+.timeline{
+    position:relative;
+    display:flex;
+    justify-content:space-between;
+    text-align:center;
+    margin-top:50px;
+}
+
+.line{
+    position:absolute;
+    top:40px;
+    left:10%;
+    width:80%;
+    height:4px;
+    background:#e31837;
+    z-index:0;
+}
+
+.step{
+    position:relative;
+    z-index:2;
+    width:23%;
+}
+
+.icon{
+    width:80px;
+    height:80px;
+    background:#e31837;
+    color:#fff;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:auto;
+    font-size:34px;
+    transition:.4s;
+}
+
+.step:hover .icon{
+    transform:scale(1.15);
+}
+
+.step h5{
+    margin-top:20px;
+    font-weight:700;
+}
+
+.step p{
+    color:#666;
+    font-size:15px;
+}
+
+/*=================================
+      COMMON EFFECTS
+==================================*/
+
+.floating-card{
+    border-radius:25px;
+    box-shadow:0 20px 50px rgba(0,0,0,.12);
+    transition:.4s;
+}
+
+.floating-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 30px 60px rgba(0,0,0,.18);
+}
+
+.btn{
+    transition:.35s ease;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 25px rgba(227,24,55,.35);
+}
+
+/*=================================
+      RESPONSIVE
+==================================*/
+
+@media(max-width:992px){
+
+.tracking-section{
+    margin-top:30px;
+}
+
+.tracking-card{
+    text-align:center;
+}
+
+.track-btn{
+    margin-top:10px;
+}
+
+.timeline{
+    display:block;
+}
+
+.line{
+    display:none;
+}
+
+.step{
+    width:100%;
+    margin-bottom:40px;
+}
+
+}
+/*=================================
+      WHY CHOOSE US
+==================================*/
+
+.choose-wrapper{
+    padding:100px 0;
+    background:#f5f7fa;
+}
+
+.choose-card{
+    background:#fff;
+    border-radius:25px;
+    padding:60px;
+    box-shadow:0 20px 50px rgba(0,0,0,.12);
+    transition:.4s;
+}
+
+.choose-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 30px 60px rgba(0,0,0,.18);
+}
+
+.section-subtitle{
+    display:block;
+    color:#e31837;
+    font-size:16px;
+    font-weight:700;
+    letter-spacing:3px;
+    margin-bottom:15px;
+}
+
+.choose-card h2{
+    font-size:44px;
+    font-weight:700;
+    color:#111;
+    line-height:58px;
+    margin-bottom:25px;
+}
+
+.choose-text{
+    color:#666;
+    font-size:17px;
+    line-height:30px;
+    margin-bottom:35px;
+}
+
+.feature-item{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
+    padding:14px 18px;
+    border-radius:15px;
+    background:#fafafa;
+    transition:.35s;
+}
+
+.feature-item i{
+    font-size:24px;
+    color:#e31837;
+}
+
+.feature-item span{
+    font-size:18px;
+    font-weight:600;
+    color:#222;
+}
+
+.feature-item:hover{
+    background:#e31837;
+    transform:translateX(8px);
+}
+
+.feature-item:hover i,
+.feature-item:hover span{
+    color:#fff;
+}
+
+.choose-img{
+    width:100%;
+    max-width:520px;
+    border-radius:20px;
+    transition:.4s;
+}
+
+.choose-img:hover{
+    transform:scale(1.05);
+}
+
+/*=================================
+      STATISTICS
+==================================*/
+
+.stats{
+    background:#111827;
+    padding:90px 0;
+}
+
+.stat-box{
+    text-align:center;
+    color:#fff;
+}
+
+.stat-box h2{
+    color:#e31837;
+    font-size:58px;
+    font-weight:700;
+}
+
+.stat-box p{
+    color:#ddd;
+    font-size:18px;
+    margin-top:10px;
+}
+
+/*=================================
+      TESTIMONIAL
+==================================*/
+
+.testimonial{
+    padding:100px 0;
+    background:#fff;
+}
+
+.testimonial-card{
+    background:#fff;
+    padding:35px;
+    border-radius:18px;
+    text-align:center;
+    transition:.4s;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    height:100%;
+}
+
+.testimonial-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 20px 40px rgba(0,0,0,.15);
+}
+
+.testimonial-card img{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    object-fit:cover;
+    margin-bottom:20px;
+    border:4px solid #e31837;
+}
+
+.testimonial-card h4{
+    font-weight:700;
+    margin-bottom:5px;
+}
+
+.testimonial-card small{
+    color:#888;
+}
+
+.stars{
+    color:#ffc107;
+    font-size:22px;
+    margin:15px 0;
+}
+
+.testimonial-card p{
+    color:#666;
+    line-height:28px;
+    font-size:15px;
+}
+
+/*=================================
+      FAQ
+==================================*/
+
+.faq-wrapper{
+    padding:100px 0;
+    background:#f5f7fa;
+}
+
+.faq-card{
+    background:#fff;
+    padding:50px;
+    border-radius:25px;
+    box-shadow:0 20px 50px rgba(0,0,0,.12);
+}
+
+.accordion-item{
+    border:none;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    margin-bottom:15px;
+}
+
+.accordion-button{
+    font-size:18px;
+    font-weight:600;
+    padding:22px;
+}
+
+.accordion-button:not(.collapsed){
+    background:#e31837;
+    color:#fff;
+}
+
+.accordion-button:focus{
+    box-shadow:none;
+}
+
+.accordion-body{
+    padding:20px;
+    color:#666;
+    line-height:28px;
+}
+
+/*=================================
+      NAVBAR SCROLL
+==================================*/
+
+.custom-navbar.scrolled{
+    background:#fff;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+    padding:12px 0;
+}
+
+.custom-navbar.scrolled .nav-link{
+    color:#111 !important;
+}
+
+.custom-navbar.scrolled .btn-outline-light{
+    color:#111;
+    border:1px solid #111;
+}
+
+.custom-navbar.scrolled .btn-outline-light:hover{
+    background:#111;
+    color:#fff;
+}
+
+.custom-navbar.scrolled .navbar-brand img{
+    height:60px;
+}
+
+/*=================================
+      FOOTER
+==================================*/
+
+.footer{
+    background:#111827;
+    color:#fff;
+}
+
+.footer h5{
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+.footer p{
+    color:#d1d5db;
+    line-height:28px;
+}
+
+.footer ul{
+    padding:0;
+}
+
+.footer ul li{
+    margin-bottom:12px;
+}
+
+.footer a{
+    color:#d1d5db;
+    transition:.3s;
+}
+
+.footer a:hover{
+    color:#e31837;
+    padding-left:5px;
+}
+
+.footer hr{
+    border-color:rgba(255,255,255,.15);
+}
+
+.footer .copyright{
+    color:#bbb;
+    font-size:15px;
+}
+
+/*=================================
+      IMAGE EFFECTS
+==================================*/
+
+img{
+    transition:.4s;
+}
+
+img:hover{
+    transform:scale(1.02);
+}
+
+/*=================================
+      RESPONSIVE
+==================================*/
+
+@media(max-width:991px){
+
+.choose-card{
+    padding:35px;
+}
+
+.choose-card h2{
+    font-size:34px;
+    line-height:46px;
+    text-align:center;
+}
+
+.choose-text{
+    text-align:center;
+}
+
+.choose-img{
+    margin-top:40px;
+}
+
+.feature-item{
+    justify-content:center;
+}
+
+.stat-box{
+    margin-bottom:40px;
+}
+
+.faq-card{
+    padding:30px;
+}
+
+}
+
+@media(max-width:576px){
+
+.choose-card h2{
+    font-size:30px;
+    line-height:40px;
+}
+
+.section-subtitle{
+    font-size:14px;
+}
+
+.feature-item span{
+    font-size:16px;
+}
+
+.stat-box h2{
+    font-size:42px;
+}
+
+.testimonial-card{
+    padding:25px;
+}
+
+.faq-card{
+    padding:20px;
+}
+
+}
+.btn{
+    position:relative;
+    overflow:hidden;
+}
+
+.ripple{
+    position:absolute;
+    border-radius:50%;
+    transform:scale(0);
+    animation:ripple .6s linear;
+    background:rgba(255,255,255,.45);
+}
+
+@keyframes ripple{
+
+    to{
+
+        transform:scale(4);
+
+        opacity:0;
+
+    }
+
+}
+.success-icon{
+
+width:90px;
+height:90px;
+
+background:#28a745;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+margin:auto;
+
+color:white;
+
+font-size:45px;
+
+animation:pop 0.8s ease-out, pulse 2s infinite 1s;
+
+box-shadow:0 0 0 rgba(40,167,69,.5);
+
+}
+
+@keyframes pop{
+
+0%{
+
+transform:scale(0) rotate(-180deg);
+opacity:0;
+
+}
+
+70%{
+
+transform:scale(1.15) rotate(15deg);
+
+}
+
+100%{
+
+transform:scale(1) rotate(0deg);
+opacity:1;
+
+}
+
+}
+
+@keyframes pulse{
+
+0%{
+
+box-shadow:0 0 0 0 rgba(40,167,69,.6);
+
+}
+
+70%{
+
+box-shadow:0 0 0 20px rgba(40,167,69,0);
+
+}
+
+100%{
+
+box-shadow:0 0 0 0 rgba(40,167,69,0);
+
+}
+
+}
