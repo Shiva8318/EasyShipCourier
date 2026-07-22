@@ -1,5 +1,7 @@
 package com.easyship.controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import jakarta.servlet.http.HttpSession;
+import com.easyship.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,20 +24,29 @@ public class ParcelController {
     }
 
     @PostMapping("/saveparcel")
-    public String saveParcel(Parcel parcel, Model model) {
+    public String saveParcel(Parcel parcel,
+                             HttpSession session,
+                             Model model) {
+
+        User user = (User) session.getAttribute("loggedUser");
+
+        parcel.setUserEmail(user.getEmail());
 
         Parcel savedParcel = service.saveParcel(parcel);
 
         model.addAttribute("trackingId", savedParcel.getTrackingId());
-
         model.addAttribute("parcel", savedParcel);
 
         return "success";
     }
     @GetMapping("/myorders")
-    public String myOrders(Model model){
+    public String myOrders(HttpSession session,
+                           Model model){
 
-        model.addAttribute("parcels", service.getAllParcels());
+        User user = (User) session.getAttribute("loggedUser");
+
+        model.addAttribute("parcels",
+                service.getParcelsByUserEmail(user.getEmail()));
 
         return "myorders";
 
